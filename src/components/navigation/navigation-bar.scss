@@ -1,0 +1,29 @@
+.bar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 999;
+}
+
+.navigation-bar-box {
+    display: flex;
+    position: relative;
+    margin-left: 5%;
+}
+
+.navigation-bar-back {
+    flex-grow: 2;
+}
+
+.navigation-bar-back image {
+    height: inherit;
+    width: inherit;
+}
+
+.navigation-bar-title {
+    flex-grow: 8;
+    font-size: 35rpx;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+}

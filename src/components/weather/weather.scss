@@ -1,0 +1,36 @@
+.weather-card {
+    width: 90%;
+    height: 90%;
+    display: flex;
+    margin: 5% 5% 5% 5%;
+}
+
+.weather-icon {
+    flex-grow: 1;
+    max-width: 50%;
+    text-align: center;
+    align-items: center;
+}
+
+.weather-icon image {
+    height: 90%;
+    width: 90%;
+    margin: 5% 5% 5% 5%;
+}
+
+.weather-info {
+    flex-grow: 1;
+    max-width: 50%;
+    color: white;
+}
+
+.weather-info .type {
+    display: block;
+    font-size: 40rpx;
+    font-weight: bold;
+}
+
+.weather-info .info {
+    display: block;
+    font-size: 20rpx;
+}
