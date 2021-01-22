@@ -1,0 +1,37 @@
+.login-form {
+    margin: 20px 20px 20px 20px;
+    padding: 10px 10px 10px 10px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 35px;
+}
+
+.login-form-atform {
+    background-color: transparent;
+}
+
+.login-form-button {
+    margin-top: 20px;
+}
+
+.login-form-input {
+    background-color: transparent;
+}
+
+.login-form-title {
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.login-form-warning {
+    font-size: 20px;
+    text-align: right;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    color: red;
+}

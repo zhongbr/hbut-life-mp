@@ -13,11 +13,14 @@
 
 .navigation-bar-back {
     flex-grow: 2;
+    align-items: center;
+    justify-content: center;
 }
 
 .navigation-bar-back image {
-    height: inherit;
-    width: inherit;
+    height: 60%;
+    width: 60%;
+    padding: 10% 10% 10% 0;
 }
 
 .navigation-bar-title {

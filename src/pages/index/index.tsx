@@ -11,8 +11,10 @@ import { WeatherCard } from '../../components/weather/weather';
 import { NavigationBarHeight, SystemInfo } from '../../utils/constants';
 import { GridTemplate } from './grid-icons-template'
 import { request } from '../../utils/net/request';
+import { ReadPassword } from '../../utils/net/password'
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './index.scss'
+import '../../static/icons/login.svg'
 
 interface Banner {
   id: number;
@@ -34,7 +36,8 @@ interface IndexState {
   scrolledHeight: number,
   banners: Banner[],
   notification?: Notification,
-  notificationAlarm?: boolean
+  notificationAlarm?: boolean,
+  hasLoginStudentNumber?: boolean
 }
 
 export default class Index extends Component<any, IndexState> {
@@ -51,7 +54,8 @@ export default class Index extends Component<any, IndexState> {
         url: 'http://pic.zhongbr.cn/banner-default.png',
         desc: '湖工life，简洁高效',
         target: 'http://pic.zhongbr.cn/banner-default.png'
-      }]
+      }],
+      hasLoginStudentNumber: true
     }
   }
 
@@ -64,6 +68,7 @@ export default class Index extends Component<any, IndexState> {
   async componentDidShow() {
     await this.GetBanners();
     await this.GetNotification();
+    await this.CheckHasLoginStudentNumber();
   }
 
   componentDidHide() { }
@@ -105,6 +110,11 @@ export default class Index extends Component<any, IndexState> {
     console.log('获取notifications成功')
   }
 
+  private async CheckHasLoginStudentNumber() {
+    let passwords = await ReadPassword(['001']);
+    this.setState({hasLoginStudentNumber: passwords.length !== 0});
+  }
+
   private async readNotification(id){
     try{
       await Taro.setStorage({key: 'alarm_notification_id_recently', data: id});
@@ -119,6 +129,21 @@ export default class Index extends Component<any, IndexState> {
         <CustomNavigationBar
           // opacity={(this.state.scrolledHeight>(NavigationBarHeight*5)?1:(this.state.scrolledHeight/(NavigationBarHeight*5)))}
         />
+
+        {/* 未登录学号的弹窗 */}
+        <AtModal isOpened={!this.state.hasLoginStudentNumber}>
+          <AtModalHeader>学号登录</AtModalHeader>
+          <AtModalContent>
+            <View className='login-modal'>
+              <Image src={'../../static/icons/login.svg'} mode='aspectFit' className='login-modal-icon' />
+              <Text className='login-modal-text'>当前未登录学号，只可使用少部分功能，登录学号后，可以使用完整的功能服务哦！</Text>
+            </View>
+          </AtModalContent>
+          <AtModalAction>
+            <Button onClick={()=>this.setState({hasLoginStudentNumber: true})}>我先看看</Button>
+            <Button onClick={()=>Taro.navigateTo({url:'../login/login?code=001'})}>现在登录</Button>
+          </AtModalAction>
+        </AtModal>
 
         {/* 通知弹窗 */}
         <AtModal isOpened={this.state.notificationAlarm}>
@@ -137,21 +162,19 @@ export default class Index extends Component<any, IndexState> {
             <Button onClick={this.readNotification.bind(this, this.state.notification?.id)}>我知道了</Button>
           </AtModalAction>
         </AtModal>
-
+        
+        {/* 图标区 */}
         <ScrollView scrollY 
           onScroll={(event)=>{
             this.setState({scrolledHeight: event.detail.scrollTop})
           }}
+          className='index'
           style={{
             height: `${SystemInfo.screenHeight-NavigationBarHeight}px`
           }}
         >
 
-          <View className='index' style={{
-            height: `${screenWidth * 2}px`,
-            width: `${screenWidth}px`
-          }}>
-            <OriginIconsContainer
+          <OriginIconsContainer
               columns={4}
               rows={8}
               templateAreas={GridTemplate}
@@ -196,11 +219,11 @@ export default class Index extends Component<any, IndexState> {
                     direction={icon.direction}
                     square={icon.square}
                     icon={icon.iconFile('../../static/icons')}
+                    onClick={()=>Taro.navigateTo({url: icon.navigate('/pages')})}
                   />
                 </OriginItem>
               ))}
             </OriginIconsContainer>
-          </View>
 
         </ScrollView>
       </>

@@ -3,7 +3,8 @@ export default {
   pages: [
     'pages/index/index',
     'pages/schedule/schedule',
-    'pages/settings/settings'
+    'pages/settings/settings',
+    'pages/login/login',
   ],
   window: {
     navigationStyle: 'custom',

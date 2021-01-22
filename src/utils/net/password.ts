@@ -1,4 +1,5 @@
 import Taro from '@tarojs/taro';
+import { LoginTips } from '../constants';
 
 export interface Password {
     username: string;
@@ -7,19 +8,13 @@ export interface Password {
 };
 
 // 本地缓存密码
-export function SavePassword(password: Password): Promise<Taro.General.CallbackResult> {
-    return new Promise<Taro.General.CallbackResult>((resolve: (res: Taro.General.CallbackResult) => void, reject: () => void) => {
-        Taro.getStorage({ key: 'passwords' })
-            .then((res: Taro.getStorage.SuccessCallbackResult<any>) => {
-                res.data[password.code] = password;
-                return Taro.setStorage({ key: 'passwords', data: res.data });
-            }, () => {
-                let data: Taro.getStorage.SuccessCallbackResult<any> = { data: {}, errMsg: '' };
-                data.data[password.code] = password;
-                Taro.setStorage({ key: 'passwords', data: data.data })
-            })
-            .then(resolve, reject);
-    });
+export async function SavePassword(password: Password) {
+    let localPasswords = {};
+    try {
+        localPasswords = await Taro.getStorage({key: 'passwords'});
+    } catch(e) {}
+    localPasswords[password.code] = password;
+    await Taro.setStorage({key: 'passwords', data: localPasswords});
 }
 
 // 读取本地缓存的密码
@@ -31,4 +26,14 @@ export async function ReadPassword(codes: Array<string>): Promise<Array<Password
     } catch (e) {
         return [];
     }
+}
+
+export function CheckPasswordSync(code: string): boolean {
+    let passwords = Taro.getStorageSync('passwords');
+    if(!passwords) return false;
+    if(!passwords[code]){
+        for(let rcode of LoginTips[code].Replace) if(passwords[rcode]) return true;
+        return false;
+    }
+    return true;
 }

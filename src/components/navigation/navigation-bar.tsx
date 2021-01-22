@@ -1,5 +1,6 @@
 import React from 'react'
-import {View, Text, Image} from '@tarojs/components'
+import {View, Image} from '@tarojs/components'
+import taro from '@tarojs/taro'
 import {AppName, MenuButtonBoundingClientReact, SystemInfo, MainColor, NavigationBarHeight} from '../../utils/constants'
 import '../../static/icons/back.svg'
 import '../../static/icons/logo.svg'
@@ -27,7 +28,10 @@ export class CustomNavigationBar extends React.Component<NavgationBarProps> {
                     paddingRight: `${SystemInfo.screenWidth-MenuButtonBoundingClientReact.left}px`
                 }}>
                     <View style={style} className='navigation-bar-back'>
-                        {this.props.hasBack&&<Image src='../../static/icons/back.svg' mode='aspectFit'/>}
+                        {this.props.hasBack&&<Image 
+                            onClick={()=>taro.navigateBack()}
+                            src='../../static/icons/back.svg' 
+                            mode='aspectFit'/>}
                     </View>
                     <View style={{...style, lineHeight: style.height}} className='navigation-bar-title'>
                         {this.props.title?this.props.title:AppName}

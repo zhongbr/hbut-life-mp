@@ -44,6 +44,11 @@ export async function request<R = any>(req:Request<ApiBody>): Promise<Response<R
         token.token.slice(0, 16),
         token.fakeid.slice(0, 16)
     );
+    req.data.data.account = aes.encrypt(
+        JSON.stringify(req.data.data.account),
+        token.token.slice(0, 16),
+        token.fakeid.slice(0, 16)
+    );
     req.data.uuid = token.fakeid;
     req.data.data.uuid = token.fakeid;
     req.data.data.platform = Platform;

@@ -7,6 +7,7 @@ interface OriginIconProps {
     square: boolean;
     direction: 'vert'|'lvl';
     icon: string;
+    onClick: ()=>void;
 }
 
 export class OriginIcon extends React.Component<OriginIconProps>{
@@ -22,8 +23,10 @@ export class OriginIcon extends React.Component<OriginIconProps>{
         }
         return (
             <View className='origin-icon-box' style={{
-                flexDirection: (vert ? 'column': 'row')
-            }}>
+                    flexDirection: (vert ? 'column': 'row')
+                }}
+                onClick={this.props.onClick}
+            >
                 <View className={`origin-icon-icon`} style={{...iconsize}}>
                     <Image mode='aspectFit' src={this.props.icon} style={{
                         width:'80%', 
