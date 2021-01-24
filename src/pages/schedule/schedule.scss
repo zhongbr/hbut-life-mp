@@ -1,0 +1,127 @@
+.schedule-scroll {
+    width: 96%;
+    margin: 0 2% 0 2%;
+}
+
+.schedule-content {
+    display: grid;
+    padding: 5% 5% 5% 0;
+    margin-bottom: 20px;
+    grid-template-columns: 9% 13% 13% 13% 13% 13% 13% 13%;
+    grid-template-rows: 5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5%;
+    height: 90%;
+    width: 95%;
+    background-color: white;
+    border-radius: 35px;
+    overflow: hidden;
+}
+
+.operations {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px 10px 10px 10px;
+    background-color: white;
+    border-radius: 35px;
+}
+
+.operations .refresh-schedule {
+    margin-top: 20px;
+}
+
+.schedule-operations {
+    display: flex;
+}
+
+.schedule-operations .operator {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.schedule-operations .week {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.schedule-cell {
+    position: relative;
+    font-size: 20px;
+    text-align: center;
+    border-radius: 20px;
+    color: white;
+    margin: 5% 5% 5% 5%;
+}
+
+.schedule-event-name {
+    display: block;
+    position: absolute;
+    font-weight: bold;
+    top: 20px;
+    width: 90%;
+}
+
+.schedule-event-location {
+    display: block;
+    position: absolute;
+    bottom: 20px;
+    width: 90%;
+}
+
+.schedule-header-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    height: 100%;
+    font-size: 25px;
+    font-weight: bolder;
+}
+
+.schedule-header-section text {
+    height: 100%;
+    line-height: 100%;
+}
+
+.schedule-header-day {
+    text-align: center;
+    font-size: 25px;
+}
+
+.today {
+    font-weight: bolder;
+}
+
+.blank {
+    background-color: ghostwhite;
+}
+
+.week {
+    display: flex;
+    align-items: center;
+}
+
+.week text {
+    width: 100%;
+}
+
+.no-login {
+    width: 100%;
+    height: 1300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.no-login image {
+    width: 80%;
+    height: 80%;
+}
+
+.no-login .login-button {
+    margin-top: 20px;
+}
+
+.no-login .tips {
+    font-size: 25px;
+    font-weight: bolder;
+    text-align: center;
+}

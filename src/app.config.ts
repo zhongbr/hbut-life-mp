@@ -5,6 +5,7 @@ export default {
     'pages/schedule/schedule',
     'pages/settings/settings',
     'pages/login/login',
+    'pages/grades/grades'
   ],
   window: {
     navigationStyle: 'custom',

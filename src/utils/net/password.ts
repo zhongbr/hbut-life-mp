@@ -21,7 +21,14 @@ export async function SavePassword(password: Password) {
 export async function ReadPassword(codes: Array<string>): Promise<Array<Password>> {
     try {
         let localPasswords = await Taro.getStorage({key: 'passwords'});
-        let results = codes.map(code => localPasswords.data[code] as Password);
+        let results = codes.map(code => {
+            if(localPasswords.data[code]) return localPasswords.data[code];
+            else {
+                for(let rcode of LoginTips[code].Replace) {
+                    if(localPasswords.data[rcode]) return localPasswords.data[rcode];
+                }
+            }
+        });
         return results;
     } catch (e) {
         return [];

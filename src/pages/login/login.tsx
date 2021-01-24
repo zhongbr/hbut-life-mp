@@ -1,7 +1,7 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
-import { View, Text } from '@tarojs/components'
-import { AtForm, AtInput, AtButton, AtMessage } from 'taro-ui'
+import { View, Text, Image } from '@tarojs/components'
+import { AtForm, AtInput, AtButton } from 'taro-ui'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
 import { request } from '../../utils/net/request'
 import { SavePassword } from '../../utils/net/password'
@@ -82,9 +82,8 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
     render() {
         return (<>
             <CustomNavigationBar hasBack title='登录' opacity={1} />
-            <AtMessage />
             <View className='login-logo'>
-
+                <Image src={'http://pic.zhongbr.cn/logo.png'} mode='scaleToFill' />
             </View>
             <View className='login-form'>
                 <Text className='login-form-title'>{this.state.loginTip?.WebsiteName}登录</Text>
@@ -104,7 +103,7 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
                         className='login-form-input'
                         required
                         title='密码'
-                        type='text'
+                        type='password'
                         placeholder={this.state.loginTip?.PasswordTips}
                         value={this.state.password}
                         onChange={(password) => this.setState({ password: password.toString() })}

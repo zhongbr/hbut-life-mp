@@ -69,6 +69,7 @@ export default class Index extends Component<any, IndexState> {
     await this.GetBanners();
     await this.GetNotification();
     await this.CheckHasLoginStudentNumber();
+
   }
 
   componentDidHide() { }
@@ -173,7 +174,6 @@ export default class Index extends Component<any, IndexState> {
             height: `${SystemInfo.screenHeight-NavigationBarHeight}px`
           }}
         >
-
           <OriginIconsContainer
               columns={4}
               rows={8}

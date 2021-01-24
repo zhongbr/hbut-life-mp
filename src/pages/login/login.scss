@@ -1,7 +1,21 @@
+.login-logo {
+    margin: 20px 20px 20px 20px;
+    border-radius: 35px;
+    height: 560px;
+    width: 710px;
+    overflow: hidden;
+}
+
+.login-logo image {
+    width: 101%;
+    height: 101%;
+    background-color: #1322CF;
+}
+
 .login-form {
     margin: 20px 20px 20px 20px;
     padding: 10px 10px 10px 10px;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color:#ffffff;
     border-radius: 35px;
 }
 

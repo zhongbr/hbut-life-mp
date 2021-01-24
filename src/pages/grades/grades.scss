@@ -1,0 +1,52 @@
+.grades-list {
+    margin: 20px 20px 20px 20px;
+    padding: 10px 10px 10px 10px;
+    background-color: white;
+    border-radius: 35px;
+    overflow: hidden;
+}
+
+.gpa-info {
+    margin: 20px 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
+    background-color: white;
+    border-radius: 35px;
+    overflow: hidden;
+    font-size: 25px;
+}
+
+.semester-selector {
+    margin: 20px 20px 20px 20px;
+    padding: 20px 20px 20px 20px;
+    background-color: white;
+    border-radius: 35px;
+    overflow: hidden;
+    font-size: 25px;
+    text-align: center;
+}
+
+.gpa-info .title {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+
+.text-right{
+    text-align: right;
+}
+
+.tags {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.year-gpa-tips {
+    color: grey;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
+}

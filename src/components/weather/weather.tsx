@@ -11,6 +11,8 @@ import '../../static/icons/weather-raniy-mid.svg';
 import '../../static/icons/weather-raniy-small.svg';
 import '../../static/icons/weather-snow.svg';
 import '../../static/icons/weather-raniy-lightning.svg';
+import '../../static/icons/weather-fog.svg';
+import '../../static/icons/weather-smog.svg';
 
 const BackgroundColors = {
     'sunny': '#F6D48A',
@@ -20,7 +22,9 @@ const BackgroundColors = {
     'raniy-lightning': '#ADBFDD',
     'raniy-mid': '#ADBFDD',
     'raniy-small': '#ADBFDD',
-    'snow': '#85B0EC'
+    'snow': '#85B0EC',
+    'fog': '#D3DDEC',
+    'smog': '#D3DDEC'
 }
 
 const Keywords = {
@@ -31,7 +35,9 @@ const Keywords = {
     'raniy-lightning': /雷|电/,
     'raniy-mid': /中雨/,
     'raniy-small': /小雨/,
-    'snow': /雪/
+    'snow': /雪/,
+    'fog': /雾/,
+    'smog': /霾/
 }
 
 interface WeatherCardProps {

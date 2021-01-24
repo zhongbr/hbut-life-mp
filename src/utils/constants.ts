@@ -8,16 +8,30 @@ export const Platform = {
     'QQ': 'qq',
 }[taro.getEnv()];
 
+// 客户端的信息
 export const SystemInfo = taro.getSystemInfoSync();
 export const MenuButtonBoundingClientReact = taro.getMenuButtonBoundingClientRect();
 export const NavigationBarHeight = MenuButtonBoundingClientReact.bottom + 5;
 
+// 主色调
 export const MainColor = /*rgb(*/'8,16,200'/*)*/;
+export const ScheduleColors = [
+    '#F8A490',
+    '#C2AAE2',
+    '#A5D0FF',
+    '#E85A2E',
+    '#F5C39D',
+    '#2FD333',
+    '#CF97FC',
+    '#D0E1DF',
+    '#F78E76',
+    '#EFA5CB',
+]
 
 // 服务器信息
-export const ServerDomain = DebugMode?'localhost':'proxy.zhongbr.cn';
-export const Protocol = DebugMode?'http':'https';
-export const Port = DebugMode?8888:5443;
+export const ServerDomain = DebugMode ? 'localhost' : 'proxy.zhongbr.cn';
+export const Protocol = DebugMode ? 'http' : 'https';
+export const Port = DebugMode ? 8888 : 5443;
 export const ApiBase = '/api/data';
 export const AuthBase = '/auth/mp';
 export const ApiVersion = '/v1';
@@ -61,3 +75,12 @@ export const LoginTips = {
         Replace: ['001']
     }
 }
+
+// 学期信息
+export const SemesterStartDay = new Date('2020-09-06T16:00:00.000Z');
+export const CurrentSemester = {
+    name: '2020-2021学年第一学期',
+    code: '20201'
+}
+export const Semesters = ['2016-2017学年第一学期', '2016-2017学年第二学期', '2017-2018学年第一学期', '2017-2018学年第二学期',
+    '2018-2019学年第一学期', '2018-2019学年第二学期', '2019-2020学年第一学期', '2019-2020学年第二学期', '2020-2021学年第一学期', '2020-2021学年第二学期'].reverse()
