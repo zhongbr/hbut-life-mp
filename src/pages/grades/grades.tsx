@@ -4,7 +4,7 @@ import { View, Text, Picker } from '@tarojs/components'
 import { AtListItem, AtList, AtFloatLayout, AtIcon } from 'taro-ui'
 import { request } from '../../utils/net/request'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
-import { CurrentSemester, Semesters } from '../../utils/constants'
+import { CurrentSemester, Semesters, MainColor } from '../../utils/constants'
 import { GpaHBUT, Subject as SubjectGpaCalculate } from '../../utils/gpa'
 import { Blank } from '../../components/blank/blank'
 import './grades.scss'
@@ -80,9 +80,9 @@ export default class GradePage extends React.Component<any, GradePageStates> {
         try {
             let otherSemesterGrades = await taro.getStorage({ key: `grades_${semester.slice(0, 4)}${semester[4] === '1' ? '2' : '1'}` });
             let [yearCredits, yearGpa] = GpaHBUT((otherSemesterGrades.data as Subject[]).concat(subjects));
-            this.setState({ yearGpa, yearCredits})
+            this.setState({ yearGpa, yearCredits })
         } catch (e) { }
-        this.setState({ subjects, totalGpa, semester: semesterString});
+        this.setState({ subjects, totalGpa, semester: semesterString });
         // 缓存查询过的成绩
         await taro.setStorage({ key: `grades_${semester}`, data: subjects });
         // 计算绩点信息
@@ -133,15 +133,15 @@ export default class GradePage extends React.Component<any, GradePageStates> {
                     </View>
                     {this.state.yearCredits !== 0 && this.state.yearGpa !== 0 && (
                         <View className='at-row at-row__align--center'>
-                        <View className='at-col'>
-                            <Text className='tags'>学年学分</Text>
-                            <Text className='value'>{this.state.yearCredits}</Text>
+                            <View className='at-col'>
+                                <Text className='tags'>学年学分</Text>
+                                <Text className='value'>{this.state.yearCredits}</Text>
+                            </View>
+                            <View className='at-col text-right'>
+                                <Text className='tags'>学年绩点</Text>
+                                <Text className='value'>{this.state.yearGpa.toFixed(4)}</Text>
+                            </View>
                         </View>
-                        <View className='at-col text-right'>
-                            <Text className='tags'>学年绩点</Text>
-                            <Text className='value'>{this.state.yearGpa.toFixed(4)}</Text>
-                        </View>
-                    </View>
                     )}
                     {this.state.yearCredits === 0 && this.state.yearGpa === 0 && (
                         <View className='year-gpa-tips'>查询该学年的其他学期成绩后可显示学年绩点</View>
@@ -158,7 +158,7 @@ export default class GradePage extends React.Component<any, GradePageStates> {
                                 extraText={`${subject.grade}分`}
                                 iconInfo={{
                                     value: 'tags',
-                                    color: '#1322CF',
+                                    color: `rgb(${MainColor})`,
                                     size: 40
                                 }}
                                 arrow={'right'}

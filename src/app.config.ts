@@ -5,7 +5,12 @@ export default {
     'pages/schedule/schedule',
     'pages/settings/settings',
     'pages/login/login',
-    'pages/grades/grades'
+    'pages/grades/grades',
+    'pages/calendar/calendar',
+    'pages/card/card',
+    'pages/book/book',
+    'pages/book/borrowed-books',
+    'pages/book/search-books'
   ],
   window: {
     navigationStyle: 'custom',
@@ -14,7 +19,7 @@ export default {
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black'
   },
-  tabBar:{
+  tabBar: {
     color: '#000000',
     selectedColor: '#192ED4',
     backgroundColor: '#ffffff',

@@ -1,0 +1,27 @@
+.operation-card {
+    display: flex;
+    margin: 5% 5% 5% 5%;
+    padding: 20px 20px 20px 20px;
+    border-radius: 35px;
+    align-items: center;
+    height: 500px;
+    position: relative;
+}
+
+.operation-title {
+    height: 100%;
+    width: 100%;
+    text-align: right;
+    font-size: 45px;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    color: white;
+    letter-spacing: 15px;
+}
+
+.operation-title text {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}

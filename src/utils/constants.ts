@@ -26,7 +26,7 @@ export const ScheduleColors = [
     '#D0E1DF',
     '#F78E76',
     '#EFA5CB',
-]
+];
 
 // 服务器信息
 export const ServerDomain = DebugMode ? 'localhost' : 'proxy.zhongbr.cn';
@@ -84,3 +84,10 @@ export const CurrentSemester = {
 }
 export const Semesters = ['2016-2017学年第一学期', '2016-2017学年第二学期', '2017-2018学年第一学期', '2017-2018学年第二学期',
     '2018-2019学年第一学期', '2018-2019学年第二学期', '2019-2020学年第一学期', '2019-2020学年第二学期', '2020-2021学年第一学期', '2020-2021学年第二学期'].reverse()
+
+
+// 校历
+export const CampusCalendar = [
+    { semester: '2020-2021第一学期校历', url: 'https://i.loli.net/2020/10/04/csINg4qevf59SnT.jpg' },
+    { semester: '2020-2021第二学期校历', url: 'https://i.loli.net/2020/10/04/NGzHs1n4IMxp6j9.jpg' },
+]
