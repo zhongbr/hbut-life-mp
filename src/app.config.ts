@@ -10,7 +10,8 @@ export default {
     'pages/card/card',
     'pages/book/book',
     'pages/book/borrowed-books',
-    'pages/book/search-books'
+    'pages/book/search-books',
+    'pages/study/study',
   ],
   window: {
     navigationStyle: 'custom',

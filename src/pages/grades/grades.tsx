@@ -1,13 +1,14 @@
 import React from 'react'
 import taro from '@tarojs/taro'
 import { View, Text, Picker } from '@tarojs/components'
-import { AtListItem, AtList, AtFloatLayout, AtIcon } from 'taro-ui'
+import { AtListItem, AtList, AtFloatLayout, AtIcon, AtNoticebar } from 'taro-ui'
 import { request } from '../../utils/net/request'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
 import { CurrentSemester, Semesters, MainColor } from '../../utils/constants'
 import { GpaHBUT, Subject as SubjectGpaCalculate } from '../../utils/gpa'
 import { Blank } from '../../components/blank/blank'
 import './grades.scss'
+import { CheckPasswordSync } from '../../utils/net/password'
 
 interface ExtraData {
     key: string;
@@ -29,6 +30,7 @@ interface GradePageStates {
     yearGpa: number;
     yearCredits: number;
     detail?: Subject;
+    aaoLogined: Boolean;
 }
 
 export default class GradePage extends React.Component<any, GradePageStates> {
@@ -41,7 +43,8 @@ export default class GradePage extends React.Component<any, GradePageStates> {
             credits: 0,
             gpa: 0,
             yearGpa: 0,
-            yearCredits: 0
+            yearCredits: 0,
+            aaoLogined: CheckPasswordSync('005')
         }
     }
 
@@ -99,6 +102,15 @@ export default class GradePage extends React.Component<any, GradePageStates> {
         return (
             <>
                 <CustomNavigationBar title='成绩查询' opacity={1} hasBack></CustomNavigationBar>
+
+                {/* 登录教务处账号的提示框 */}
+                {!this.state.aaoLogined && <AtNoticebar 
+                    icon={'tag'} 
+                    moreText={'点击登录'} 
+                    showMore 
+                    single
+                    onGotoMore={()=>taro.navigateTo({url:'../login/login?code=005'})}
+                >登录教务处账号</AtNoticebar>}
 
                 <Picker mode='selector' range={Semesters} value={0} onChange={event => this.GetGradeFromServer(Semesters[event.detail.value])}>
                     <View className='semester-selector'>

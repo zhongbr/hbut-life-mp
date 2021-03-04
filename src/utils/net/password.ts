@@ -11,7 +11,7 @@ export interface Password {
 export async function SavePassword(password: Password) {
     let localPasswords = {};
     try {
-        localPasswords = await Taro.getStorage({key: 'passwords'});
+        localPasswords = (await Taro.getStorage({key: 'passwords'})).data;
     } catch(e) {}
     localPasswords[password.code] = password;
     await Taro.setStorage({key: 'passwords', data: localPasswords});

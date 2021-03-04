@@ -223,7 +223,7 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
                         ))}
                         {/* 空白格子  */}
                         {[...new Array(70 - Object.keys(this.state.events).length)].map((_, index) => (
-                            <View className='schedule-cell animation-scale-up blank' style={{
+                            <View className='schedule-cell animation-scale-up blank-cell' style={{
                                 gridArea: `blank${index}`
                             }}></View>
                         ))}
@@ -246,7 +246,7 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
             {/* 登录提示 */}
             {!this.state.hasLogin && <View className='no-login'>
                 <Blank tips='登录学号后才能看课表哦！' buttonTips='登录' onClick={() => Taro.navigateTo({
-                    url: '../login/login?code=001'
+                    url: '../login/login?code=005'
                 })}></Blank>
             </View>}
         </>)

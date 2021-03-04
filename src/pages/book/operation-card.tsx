@@ -17,9 +17,7 @@ export class OperationCard extends React.Component<OperationCardProp> {
         }}
             onClick={this.props.onClick}
         >
-            <View className='operation-title' style={{
-                backgroundImage: `url(${this.props.image})`
-            }}>
+            <View className={`operation-title ${this.props.image}`}>
                 <Text>{this.props.title}</Text>
             </View>
         </View>

@@ -47,6 +47,9 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
                 password: this.state.password,
                 code: this.code
             }
+            Taro.showLoading({
+                title:'登录中'
+            });
             let resp = await request({
                 data: {
                     group: 'base',
@@ -57,6 +60,7 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
                     }
                 }
             });
+            Taro.hideLoading();
             let valid = resp.data.valid;
             if (!valid) Taro.showModal({
                 title: '登录出错',
@@ -72,7 +76,7 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
                 })
                 await Taro.showToast({
                     title: `登录成功`
-                })
+                });
                 Taro.navigateBack();
             }
 

@@ -38,6 +38,7 @@ export async function request<R = any>(req:Request<ApiBody>): Promise<Response<R
     let token = await TokenFactory();
     let passwords = await ReadPassword(req.data.data.accounts as string[]);
     req.data.group = `origin/${req.data.group}`;
+    console.log('resquest info:', JSON.parse(JSON.stringify(req)),passwords);
     // 加密密码
     req.data.data.accounts = aes.encrypt(
         JSON.stringify(passwords),

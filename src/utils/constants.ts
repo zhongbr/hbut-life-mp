@@ -1,7 +1,7 @@
 import taro from '@tarojs/taro'
 
 export const AppName = '湖工life';
-export const DebugMode = false;
+export const DebugMode = true;
 export const AppVersion = '6.0';
 export const Platform = {
     'WEAPP': 'wx',
@@ -79,11 +79,12 @@ export const LoginTips = {
 // 学期信息
 export const SemesterStartDay = new Date('2020-09-06T16:00:00.000Z');
 export const CurrentSemester = {
-    name: '2020-2021学年第一学期',
-    code: '20201'
+    name: '2020-2021学年第二学期',
+    code: '20202'
 }
 export const Semesters = ['2016-2017学年第一学期', '2016-2017学年第二学期', '2017-2018学年第一学期', '2017-2018学年第二学期',
-    '2018-2019学年第一学期', '2018-2019学年第二学期', '2019-2020学年第一学期', '2019-2020学年第二学期', '2020-2021学年第一学期', '2020-2021学年第二学期'].reverse()
+    '2018-2019学年第一学期', '2018-2019学年第二学期', '2019-2020学年第一学期', '2019-2020学年第二学期', '2020-2021学年第一学期',
+     '2020-2021学年第二学期'].reverse()
 
 
 // 校历
@@ -91,3 +92,8 @@ export const CampusCalendar = [
     { semester: '2020-2021第一学期校历', url: 'https://i.loli.net/2020/10/04/csINg4qevf59SnT.jpg' },
     { semester: '2020-2021第二学期校历', url: 'https://i.loli.net/2020/10/04/NGzHs1n4IMxp6j9.jpg' },
 ]
+
+// 自习
+export const Buildings = {
+    '本部': ['1教', '2教', '3教（文科楼）', '4教(艺术楼)', '5教（轻工大楼）', '6教(实训楼)', '北教1', '北教3', '工1', '工2', '机电楼']
+}
