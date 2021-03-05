@@ -1,7 +1,7 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
 import { View, ScrollView, Text, Image } from '@tarojs/components'
-import { AtButton, AtFloatLayout, AtList, AtListItem } from 'taro-ui'
+import { AtButton, AtFloatLayout, AtList, AtListItem, AtCard } from 'taro-ui'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
 import { request } from '../../utils/net/request'
 import { GetTodayWeekday, CampusDateInfo, WeekdayToDate } from '../../utils/date'
@@ -10,6 +10,7 @@ import { CheckPasswordSync } from '../../utils/net/password'
 import { SystemInfo, MenuButtonBoundingClientReact, ScheduleColors } from '../../utils/constants'
 import { Blank } from '../../components/blank/blank'
 import './schedule.scss'
+import '../../static/icons/calendar.svg'
 
 interface Schedule {
     weeks: number[],
@@ -34,6 +35,19 @@ interface Event {
     color: string;
 }
 
+interface CoursePreviousInfo {
+    Classes: string;
+    CurName: string;
+    Day: number;
+    DayStr: string;
+    DayTime: number;
+    DayTimeStr: string;
+    Place: string;
+    TaskTimeType: number;
+    Teacher: string;
+    Week: string;
+}
+
 interface SchedulePageState {
     events: { [key: string]: Event };
     gridTemplate: string;
@@ -54,6 +68,7 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
         dayString: '星期二'
     }
     private courses: Course[] = [];
+    private previous: CoursePreviousInfo[] = [];
 
     constructor(props: any) {
         super(props);
@@ -68,15 +83,19 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
 
     async onLoad() {
         let courses: Course[] = [];
+        let previous: CoursePreviousInfo[] = [];
         try {
             // 先尝试从本地缓存里读取课表
             courses = (await Taro.getStorage({ key: 'courses_schedule' })).data;
+            previous = (await Taro.getStorage({ key: 'previous_schedule' })).data;
         } catch (e) {
             let res = await this.RefreshScheduleFromServer();
-            courses = res['courses'];
+            courses = res.courses;
+            previous = res.previous;
         }
         this.courses = courses;
-        this.GenerateScheduleTable(this.today.week, courses)
+        this.previous = previous;
+        this.GenerateScheduleTable(this.today.week);
     }
 
     async componentDidShow() {
@@ -97,6 +116,7 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
                 await this.RefreshScheduleFromServer();
                 Taro.hideLoading();
                 Taro.showToast({ title: '更新成功' });
+                this.GenerateScheduleTable(this.state.week, this.courses);
             } catch (e) {
                 Taro.hideLoading();
                 Taro.showToast({ title: '更新失败', icon: 'none' });
@@ -118,12 +138,15 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
             }
         });
         let courses = resp.data.courses as Course[];
+        let previous = resp.data.previous_data as CoursePreviousInfo[];
         // 缓存到本地
         await Taro.setStorage({ key: 'courses_schedule', data: courses });
-        return { courses };
+        await Taro.setStorage({ key: 'previous_schedule', data: previous });
+        return { courses, previous };
     }
 
-    private GenerateScheduleTable(week: number, courses: Course[]) {
+    // 生成指定周的课表
+    private GenerateScheduleTable(week: number, courses: Course[] = this.courses, previous = this.previous) {
         week = week > 0 ? week : 1;
         let template: string[][] = [];
         for (let i = 0; i < 11; i++) {
@@ -138,7 +161,6 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
             course.schedules.forEach(schedule => {
                 if (schedule.weeks.indexOf(week) !== -1) {
                     schedule.section?.forEach(section => {
-                        console.log('set', course.name, schedule)
                         let hash = `cell_${Sha1Hash(`${course.name}${schedule.classroom}${week}${schedule.day}${course.teachers}`).slice(0, 5)}`;
                         if (!colors[course.name]) colors[course.name] = ScheduleColors[Object.keys(events).length % ScheduleColors.length];
                         template[section][schedule.day] = hash;
@@ -182,10 +204,10 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
                     scrollY
                     className='schedule-scroll'
                     style={{
-                        height: `${SystemInfo.windowHeight - MenuButtonBoundingClientReact.bottom - 5}px`
+                        height: `${SystemInfo.windowHeight - MenuButtonBoundingClientReact.bottom + 25}px`
                     }}
                 >
-                    <View className='operations'>
+                    <View className='operations card'>
                         <View className='schedule-operations'>
                             <AtButton type='primary' onClick={this.GenerateScheduleTable.bind(this, this.state.week - 1, this.courses)} className='operator' size='small' circle>上周</AtButton>
                             <View className='week'><Text>{`第${this.state.week}周`}</Text></View>
@@ -228,6 +250,33 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
                             }}></View>
                         ))}
                     </View>
+                    {/* 整周的课程 */}
+                    <AtCard
+                        className='other-schedule-content'
+                        title='其他课程'
+                        thumb='../../static/icons/calendar.svg'
+                        isFull
+                    >
+                        {this.previous.filter(course => course.TaskTimeType === 2).length !== 0 && <AtList
+                            hasBorder={false}
+                        >
+                            {this.previous.filter(course => course.TaskTimeType === 2).map(course => <AtListItem
+                                hasBorder={false}
+                                title={course.CurName}
+                                note={`${course.Week} ${course.DayStr} ${course.DayTimeStr}`}
+                                onClick={() => this.setState({
+                                    showDetail: true, detail: {
+                                        name: course.CurName,
+                                        location: `${course.Week} ${course.DayStr} ${course.DayTimeStr}`,
+                                        members: [course.Teacher],
+                                        time: new Date(),
+                                        hash: '',
+                                        color: course.Classes
+                                    }
+                                })}
+                            />)}
+                        </AtList>}
+                    </AtCard>
                 </ScrollView>
             }
             {/* 课程详情浮层 */}
@@ -239,8 +288,12 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
             >
                 <AtList hasBorder={false}>
                     <AtListItem hasBorder={false} title='课程名称' note={this.state.detail?.name} />
-                    <AtListItem hasBorder={false} title='上课教室' note={this.state.detail?.location} />
+                    {this.state.detail?.hash === '' && <AtListItem hasBorder={false} title='上课教室' note={this.state.detail?.location} />}
                     <AtListItem hasBorder={false} title='授课老师' note={this.state.detail?.members.join(',')} />
+                    {this.state.detail?.hash === '' && <>
+                        <AtListItem hasBorder={false} title='上课时间' note={this.state.detail?.location} />
+                        <AtListItem hasBorder={false} title='上课班级' note={this.state.detail?.color} />
+                    </>}
                 </AtList>
             </AtFloatLayout>
             {/* 登录提示 */}

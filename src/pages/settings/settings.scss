@@ -1,0 +1,16 @@
+.opendata-box {
+    text-align: center;
+    .avatar {
+        width: 30%;
+        overflow: hidden;
+        margin-left: 35%;
+        border-radius: 50%;
+        open-data{
+            height: inherit;
+        }
+    }
+    .nickname {
+        font-size: 35px;
+        font-weight: bold;
+    }
+}

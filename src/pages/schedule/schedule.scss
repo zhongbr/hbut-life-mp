@@ -6,22 +6,24 @@
 .schedule-content {
     display: grid;
     padding: 5% 5% 5% 0;
-    margin-bottom: 20px;
+    //margin-bottom: 20px;
     grid-template-columns: 9% 13% 13% 13% 13% 13% 13% 13%;
     grid-template-rows: 5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5% 9.5%;
     height: 90%;
-    width: 95%;
+    // width: 95%;
     background-color: white;
-    border-radius: 35px;
+    border-radius: 15px;
     overflow: hidden;
 }
 
 .operations {
     margin-top: 20px;
     margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
     padding: 10px 10px 10px 10px;
     background-color: white;
-    border-radius: 35px;
+    border-radius: 15px;
 }
 
 .operations .refresh-schedule {
@@ -46,7 +48,7 @@
     position: relative;
     font-size: 20px;
     text-align: center;
-    border-radius: 20px;
+    border-radius: 10px;
     color: white;
     margin: 5% 5% 5% 5%;
 }
@@ -126,4 +128,11 @@
     font-size: 25px;
     font-weight: bolder;
     text-align: center;
+}
+
+.other-schedule-content{
+    font-size: 15px;
+    border-radius: 15px;
+    overflow: hidden;
+    //margin: 10px 10px 10px 10px;
 }

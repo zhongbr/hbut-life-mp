@@ -100,7 +100,7 @@ export default class StudyPage extends React.Component<any, StudyPageState> {
                             name={param}
                             mode='selector'
                             range={Tips[param].range(this.state)}
-                            value={this.state[param]}
+                            value={Tips[param].range(this.state).indexOf(this.state[param])}
                             onChange={event => {
                                 let range = Tips[param].range(this.state);
                                 let property = range[event.detail.value];

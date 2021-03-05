@@ -17,6 +17,15 @@ export async function SavePassword(password: Password) {
     await Taro.setStorage({key: 'passwords', data: localPasswords});
 }
 
+export async function RemovePassword(code:string) {
+    let localPasswords = {};
+    try {
+        localPasswords = (await Taro.getStorage({key: 'passwords'})).data;
+    } catch(e) {}
+    localPasswords[code] = undefined;
+    await Taro.setStorage({key: 'passwords', data: localPasswords});
+}
+
 // 读取本地缓存的密码
 export async function ReadPassword(codes: Array<string>): Promise<Array<Password>> {
     try {
@@ -43,4 +52,19 @@ export function CheckPasswordSync(code: string): boolean {
         return false;
     }
     return true;
+}
+
+export function CheckPasswordWithoutReplaceSync(code: string): boolean {
+    let passwords = Taro.getStorageSync('passwords');
+    return Boolean(passwords[code]);
+}
+
+export function ReadPasswordSync(code: string): Password {
+    let passwords = Taro.getStorageSync('passwords');
+    if(!passwords) return undefined;
+    if(!passwords[code]){
+        for(let rcode of LoginTips[code].Replace) if(passwords[rcode]) return passwords[rcode];
+        return undefined;
+    }
+    return passwords[code];
 }

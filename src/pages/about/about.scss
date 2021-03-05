@@ -1,0 +1,38 @@
+.passage {
+    font-size: 30px;
+    padding: 10px 10px 10px 10px;
+
+    .first-title{
+        text-align: center;
+        font-size: 40px;
+        font-weight: bolder;
+    }
+
+    .sub-title {
+        text-align: left;
+        font-size: 35px;
+        font-weight: bold;
+    }
+
+    .content {
+        text-align: left;
+        text-indent: 60px;
+    }
+
+    .italic {
+        font-style: italic;
+    }
+
+    .under-line {
+        text-decoration: underline;
+    }
+
+    .link {
+        color: #8181f5;
+    }
+
+    .paragraph{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+}

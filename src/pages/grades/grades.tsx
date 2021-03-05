@@ -8,7 +8,7 @@ import { CurrentSemester, Semesters, MainColor } from '../../utils/constants'
 import { GpaHBUT, Subject as SubjectGpaCalculate } from '../../utils/gpa'
 import { Blank } from '../../components/blank/blank'
 import './grades.scss'
-import { CheckPasswordSync } from '../../utils/net/password'
+import { CheckPasswordWithoutReplaceSync } from '../../utils/net/password'
 
 interface ExtraData {
     key: string;
@@ -44,7 +44,7 @@ export default class GradePage extends React.Component<any, GradePageStates> {
             gpa: 0,
             yearGpa: 0,
             yearCredits: 0,
-            aaoLogined: CheckPasswordSync('005')
+            aaoLogined: CheckPasswordWithoutReplaceSync('005')
         }
     }
 

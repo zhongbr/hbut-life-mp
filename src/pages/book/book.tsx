@@ -1,7 +1,7 @@
 import React from 'react'
 import Taro, { navigateTo } from '@tarojs/taro'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
-import { OperationCard } from './operation-card'
+import { OperationCard } from '../../components/operation-card/operation-card'
 
 interface LibraryPageState { }
 

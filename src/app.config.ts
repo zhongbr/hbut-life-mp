@@ -12,6 +12,12 @@ export default {
     'pages/book/borrowed-books',
     'pages/book/search-books',
     'pages/study/study',
+    'pages/exam/exam',
+    'pages/lab/lab',
+    'pages/elective/elective',
+    'pages/elective/tables',
+    'pages/elective/histories',
+    'pages/about/about'
   ],
   window: {
     navigationStyle: 'custom',
@@ -28,7 +34,7 @@ export default {
     list: [
       {
         pagePath: 'pages/index/index',
-        text: '发现',
+        text: '首页',
         iconPath: `${StaticIconPath}/home.png`,
         selectedIconPath: `${StaticIconPath}/home.png`
       },
@@ -40,7 +46,7 @@ export default {
       },
       {
         pagePath: 'pages/settings/settings',
-        text: '设置',
+        text: '我的',
         iconPath: `${StaticIconPath}/settings.png`,
         selectedIconPath: `${StaticIconPath}/settings.png`
       }

@@ -49,3 +49,8 @@ export function DateFormat(date: Date, fmt: string): string {
     }
     return fmt;
 }
+
+export function GetCountDownDays(date: Date) :number {
+    let millSeconds = date.valueOf() - new Date().valueOf();
+    return Math.ceil(millSeconds / 86400000);
+}

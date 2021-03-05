@@ -1,7 +1,7 @@
 import taro from '@tarojs/taro'
 
 export const AppName = '湖工life';
-export const DebugMode = true;
+export const DebugMode = false;
 export const AppVersion = '6.0';
 export const Platform = {
     'WEAPP': 'wx',
@@ -36,6 +36,8 @@ export const ApiBase = '/api/data';
 export const AuthBase = '/auth/mp';
 export const ApiVersion = '/v1';
 export const TokenExpire = 600;
+
+export const Accounts = ['001', '002', '003', '004', '005'];
 
 // 登录账户信息
 export const LoginTips = {
@@ -72,14 +74,14 @@ export const LoginTips = {
         UsernameTips: '教务处账号',
         PasswordTips: '教务处密码',
         WebsiteUrl: 'http://run.hbut.edu.cn',
-        Replace: ['001']
+        Replace: []
     }
 }
 
 // 学期信息
 export const SemesterStartDay = new Date('2020-09-06T16:00:00.000Z');
 export const CurrentSemester = {
-    name: '2020-2021学年第二学期',
+    name: '2020-2021学年第一学期',
     code: '20202'
 }
 export const Semesters = ['2016-2017学年第一学期', '2016-2017学年第二学期', '2017-2018学年第一学期', '2017-2018学年第二学期',

@@ -123,20 +123,22 @@ export default class SearchBooksPage extends React.Component<any, SearchBookStat
                 onClick={this.ScanQRCode.bind(this)}
             >扫图书条码</AtButton>
             {/* 搜索结果 */}
-            {(this.state.results?.length === 0 || !this.state.results) && <Blank tips='没有搜索到哦！' />}
-            {this.state.results?.length !== 0 && <View className='card'>
-                <AtList
-                    hasBorder={false}
-                >
-                    {this.state.results?.map((result, index) => <AtListItem
-                        title={`${index + 1}.${result.name}`}
-                        note={`${result.author} ${result.publishingCompany}`}
-                        extraText={`${result.borrowAble}/${result.all}本`}
-                        arrow='right'
-                        onClick={this.GetBookDetail.bind(this, result.href)}
-                    />)}
-                </AtList>
-            </View>}
+            <view className='card'>
+                {(this.state.results?.length === 0 || !this.state.results) && <Blank tips='没有搜索到哦！' />}
+                {this.state.results?.length !== 0 && <View>
+                    <AtList
+                        hasBorder={false}
+                    >
+                        {this.state.results?.map((result, index) => <AtListItem
+                            title={`${index + 1}.${result.name}`}
+                            note={`${result.author} ${result.publishingCompany}`}
+                            extraText={`${result.borrowAble}/${result.all}本`}
+                            arrow='right'
+                            onClick={this.GetBookDetail.bind(this, result.href)}
+                        />)}
+                    </AtList>
+                </View>}
+            </view>
             {/* 图书详情 */}
             <AtFloatLayout
                 isOpened={Boolean(this.state.detail)}
