@@ -34,7 +34,7 @@ export class Token {
                         method: 'GET',
                         dataType: 'json',
                         data: {
-                            platform: 'wx',
+                            platform: Platform,
                             js_code: jscode
                         },
                         success(res: any) {

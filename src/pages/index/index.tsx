@@ -11,7 +11,8 @@ import { WeatherCard } from '../../components/weather/weather';
 import { NavigationBarHeight, SystemInfo } from '../../utils/constants';
 import { GridTemplate } from './grid-icons-template'
 import { request } from '../../utils/net/request';
-import { ReadPassword } from '../../utils/net/password'
+import { CheckPasswordSync } from '../../utils/net/password';
+import * as utils from '../../utils/index';
 import "taro-ui/dist/style/components/button.scss" // 按需引入
 import './index.scss'
 import '../../static/icons/login.svg'
@@ -69,7 +70,6 @@ export default class Index extends Component<any, IndexState> {
     await this.GetBanners();
     await this.GetNotification();
     await this.CheckHasLoginStudentNumber();
-
   }
 
   componentDidHide() { }
@@ -112,8 +112,7 @@ export default class Index extends Component<any, IndexState> {
   }
 
   private async CheckHasLoginStudentNumber() {
-    let passwords = await ReadPassword(['001']);
-    this.setState({hasLoginStudentNumber: passwords.length !== 0});
+    this.setState({hasLoginStudentNumber: CheckPasswordSync('001')});
   }
 
   private async readNotification(id){
@@ -151,7 +150,7 @@ export default class Index extends Component<any, IndexState> {
           <AtModalHeader>开发者通知</AtModalHeader>
           <AtModalContent>
             <View className='notification-title'>{this.state.notification?.title}</View>
-            <View className='notification-sendtime'>发送时间: {new Date(this.state.notification?.send_time).toLocaleString()}</View>
+            <View className='notification-sendtime'>发送时间: {utils.date.DateFormat(new Date(this.state.notification?.send_time), 'yyyy-MM-dd hh:mm:ss')}</View>
             {/* 通知中的图片 */this.state.notification?.image_url && (
               <Image src={this.state.notification?.image_url} className='notification-image' mode='aspectFit'></Image>
             )}

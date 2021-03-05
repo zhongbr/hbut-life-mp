@@ -15,8 +15,20 @@ interface NavgationBarProps {
 
 export class CustomNavigationBar extends React.Component<NavgationBarProps> {
     render() {
+        const height = {
+            WEAPP: `${MenuButtonBoundingClientReact.height + 5}px`,
+            QQ: `50px`
+        }[taro.getEnv()]
+        const paddingTop = {
+            WEAPP: `${MenuButtonBoundingClientReact.top}px`,
+            QQ: `35px`
+        }[taro.getEnv()];
+        const paddingRight = {
+            WEAPP: `${SystemInfo.screenWidth - MenuButtonBoundingClientReact.left}px`,
+            QQ: `80px`
+        }[taro.getEnv()];
         let style: React.CSSProperties = {
-            height: `${MenuButtonBoundingClientReact.height + 5}px`,
+            height,
             width: `${MenuButtonBoundingClientReact.height}px`,
         }
         return (
@@ -25,8 +37,8 @@ export class CustomNavigationBar extends React.Component<NavgationBarProps> {
                     backgroundColor: `rgba(${MainColor},${this.props.opacity ? this.props.opacity : 0})`,
                 }}>
                     <View className='navigation-bar-box' style={{
-                        paddingTop: `${MenuButtonBoundingClientReact.top}px`,
-                        paddingRight: `${SystemInfo.screenWidth - MenuButtonBoundingClientReact.left}px`
+                        paddingTop,
+                        paddingRight
                     }}>
                         <View style={style} className='navigation-bar-back'>
                             {this.props.hasBack && <Image
@@ -41,7 +53,10 @@ export class CustomNavigationBar extends React.Component<NavgationBarProps> {
                 </View>
                 {/* 使用一个高度和导航条相同的view 防止内容被导航条盖住 */}
                 <View style={{
-                    height: `${MenuButtonBoundingClientReact.bottom + 5}px`
+                    height: {
+                        WEAPP: `${MenuButtonBoundingClientReact.bottom + 5}px`,
+                        QQ: '85px'
+                    }[taro.getEnv()]
                 }} />
                 {/* Taro消息提醒  */}
                 <View>

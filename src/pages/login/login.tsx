@@ -4,6 +4,7 @@ import { View, Text, Image } from '@tarojs/components'
 import { AtForm, AtInput, AtButton } from 'taro-ui'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
 import { request } from '../../utils/net/request'
+import * as utils from '../../utils/index'
 import { SavePassword } from '../../utils/net/password'
 import { LoginTips } from '../../utils/constants'
 import './login.scss'
@@ -83,6 +84,22 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
         }
     }
 
+    async TestUserLogin(){
+        let res = await Taro.showModal({
+            title: '进入游客登录模式',
+            content: '你即将进入游客登录模式，该模式可以体验小程序的功能，但是数据均为虚拟数据、'
+        })
+        if(res.confirm){
+            utils.test.SetTestMode(true); // 开启测试模式
+            Taro.reLaunch({
+                url: '../index/index',
+                success:()=>{
+                    Taro.showToast({title: '游客登录'});
+                }
+            })    
+        }
+    }
+
     render() {
         return (<>
             <CustomNavigationBar hasBack title='登录' opacity={1} />
@@ -112,9 +129,12 @@ export default class LoginPage extends React.Component<any, LoginPageState> {
                         value={this.state.password}
                         onChange={(password) => this.setState({ password: password.toString() })}
                     />
+                    <View className='test-login' onClick={this.TestUserLogin.bind(this)}>
+                        <Text>游客登录</Text>
+                    </View>
                     <View className='login-form-warning'>如果你点击“登录验证”按钮，随即代表你同意本应用从{this.state.loginTip?.WebsiteUrl}网站获取数据。</View>
                     <AtButton className='login-form-button' type='primary' circle onClick={this.tryToLogin.bind(this)}>登录验证</AtButton>
-                    <AtButton className='login-form-button' type='primary' circle onClick={() => this.setState({ username: '', password: '' })}>重新输入</AtButton>
+                    {/* <AtButton className='login-form-button' type='primary' circle onClick={() => this.setState({ username: '', password: '' })}>重新输入</AtButton> */}
                 </AtForm>
             </View>
         </>)

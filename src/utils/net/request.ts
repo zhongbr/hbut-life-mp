@@ -4,6 +4,7 @@ import TokenFactory from './token';
 import { ReadPassword } from './password';
 import {Protocol, ServerDomain, Port, ApiBase, ApiVersion, Platform, AppVersion} from '../constants';
 import aes from "./aes/export";
+import { IsTestMode, TestRequest } from './test-mode'
 
 export interface Request<D> {
     header?: any;
@@ -25,13 +26,20 @@ export interface ApiBody {
 }
 
 export function RequestPromise(req: any): Promise<taro.request.SuccessCallbackResult> {
-    return new Promise((resolve, reject)=>{
+    if(!IsTestMode()) return new Promise((resolve, reject)=>{
         taro.request({
             ...req,
             success: res => resolve(res),
             fail: (res)=> reject(res),
         })
     });
+    else return new Promise((resolve, reject)=>{
+        TestRequest({
+            ...req,
+            success: (res) => resolve(res),
+            fail: ()=>reject()
+        })
+    })
 }
 
 export async function request<R = any>(req:Request<ApiBody>): Promise<Response<R>> {
@@ -67,6 +75,7 @@ export async function request<R = any>(req:Request<ApiBody>): Promise<Response<R
             'X-Tag': `${signature},${timestamp},${nonce},${token.fakeid}`,
         }
     });
+    console.log('response', resp);
     return {
         code: resp.data.code,
         msg: `http:${resp.errMsg}, server:${resp.data.message}`,

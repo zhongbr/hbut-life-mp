@@ -5,3 +5,4 @@ export * as gpa from './gpa';
 export * as icons from './icons';
 export * as userinfo from './userinfo';
 export * as constants from './constants';
+export * as test from './net/test-mode';

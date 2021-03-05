@@ -1,5 +1,6 @@
 import Taro from '@tarojs/taro';
 import { LoginTips } from '../constants';
+import { IsTestMode, SetTestMode } from './test-mode'
 
 export interface Password {
     username: string;
@@ -9,6 +10,7 @@ export interface Password {
 
 // 本地缓存密码
 export async function SavePassword(password: Password) {
+    if(IsTestMode()) return; // 游客
     let localPasswords = {};
     try {
         localPasswords = (await Taro.getStorage({key: 'passwords'})).data;
@@ -18,6 +20,15 @@ export async function SavePassword(password: Password) {
 }
 
 export async function RemovePassword(code:string) {
+    if(IsTestMode()) {
+        SetTestMode(false);
+        Taro.reLaunch({
+            url: '/pages/index/index',
+            success(){
+                Taro.showToast({title: '退出游客登录'});
+            }
+        })
+    }
     let localPasswords = {};
     try {
         localPasswords = (await Taro.getStorage({key: 'passwords'})).data;
@@ -31,6 +42,7 @@ export async function ReadPassword(codes: Array<string>): Promise<Array<Password
     try {
         let localPasswords = await Taro.getStorage({key: 'passwords'});
         let results = codes.map(code => {
+            if(IsTestMode()) return {code: code, username:'游客登录', password:'游客登录'}; // 游客
             if(localPasswords.data[code]) return localPasswords.data[code];
             else {
                 for(let rcode of LoginTips[code].Replace) {
@@ -45,6 +57,7 @@ export async function ReadPassword(codes: Array<string>): Promise<Array<Password
 }
 
 export function CheckPasswordSync(code: string): boolean {
+    if(IsTestMode()) return true; // 游客
     let passwords = Taro.getStorageSync('passwords');
     if(!passwords) return false;
     if(!passwords[code]){
@@ -55,11 +68,13 @@ export function CheckPasswordSync(code: string): boolean {
 }
 
 export function CheckPasswordWithoutReplaceSync(code: string): boolean {
+    if(IsTestMode()) return true; // 游客
     let passwords = Taro.getStorageSync('passwords');
     return Boolean(passwords[code]);
 }
 
 export function ReadPasswordSync(code: string): Password {
+    if(IsTestMode()) return {code: code, username:'游客登录', password:'游客登录'}; // 游客
     let passwords = Taro.getStorageSync('passwords');
     if(!passwords) return undefined;
     if(!passwords[code]){

@@ -111,10 +111,10 @@ export default class ElectiveHistoriesPage extends React.Component<any, Elective
             }
         });
         let courses = resp.data.courses as any[];
-        courses.forEach((course, index) => {
+        courses?.forEach((course, index) => {
             let subjects = course.courses as Subject[];
             let clearly = false;
-            subjects.forEach(subject => {
+            subjects?.forEach(subject => {
                 if (subject.semester === semesters[subject.subject_name]) {
                     res[subject.subject_type] = res[subject.subject_type] ? res[subject.subject_type] : 0;
                     res[subject.subject_type] += this.state.electiveCourses[subject.semester].grade >= 60 ? this.state.electiveCourses[subject.semester].credit : 0;

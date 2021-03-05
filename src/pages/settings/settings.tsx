@@ -11,6 +11,7 @@ import './settings.scss'
 interface SettingPageState {
     userinfo?: utils.userinfo.UserInfoInterface;
     loginState?: { [key: string]: boolean };
+    testState?: boolean;
 }
 
 export default class SettingsPage extends React.Component<any, SettingPageState> {
@@ -24,6 +25,7 @@ export default class SettingsPage extends React.Component<any, SettingPageState>
     async componentDidShow() {
         this.checkLogin();
         await this.getUserInfo();
+        this.setState({testState: utils.test.IsTestMode()})
     }
 
     private checkLogin() {
@@ -36,6 +38,22 @@ export default class SettingsPage extends React.Component<any, SettingPageState>
     private async getUserInfo() {
         let userinfo = await utils.userinfo.GetUserInfo();
         this.setState({ userinfo });
+    }
+
+    private async quitTestMode(){
+        let res = await Taro.showModal({
+            title: '退出游客登录',
+            content: '你即将退出游客登录模式，确认吗？'
+        })
+        if(res.confirm){
+            utils.test.SetTestMode(false);
+            Taro.reLaunch({
+                url: '../index/index',
+                success(){
+                    Taro.showToast({title:'退出游客登录'})
+                }
+            })
+        }
     }
 
     render() {
@@ -115,6 +133,11 @@ export default class SettingsPage extends React.Component<any, SettingPageState>
                                 arrow='right'
                             />
                         </Navigator>
+                        {this.state.testState && <AtListItem 
+                            title='退出游客登录'
+                            arrow='right'
+                            onClick={this.quitTestMode.bind(this)}
+                        />}
                         <AtListItem
                             title='清除缓存'
                             arrow='right'
