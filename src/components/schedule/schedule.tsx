@@ -65,6 +65,7 @@ export class Schedule extends React.Component<ScheduleProps, ScheduleState> {
         const colors = this.props.colors;
         // 遍历课表
         let rowCount = 1, colorsMap = {}, colorCount = 0;
+        let checkpoints = {};
         for (let lesson of this.props.lessons) {
             const rhead = `rhead${rowCount++}`;
             let row = [rhead];
@@ -72,7 +73,16 @@ export class Schedule extends React.Component<ScheduleProps, ScheduleState> {
             for (let day of this.props.days) {
                 let cellDatas = this.props.schedule[lesson][day];
                 if (cellDatas.length > 0) {
-                    const grid = 'g' + hash.Sha1Hash(cellDatas[0].join('') + day + lesson).slice(0, 5);
+                    let grid_ = 'g' + hash.Sha1Hash(cellDatas[0].join('') + day).slice(0, 5);
+                    let grid = grid_;
+                    if(checkpoints[grid]?.length){
+                        if(Math.abs(this.props.lessons.indexOf(checkpoints[grid][0])-this.props.lessons.indexOf(lesson))>1){
+                            grid = 'g'+hash.Sha1Hash(grid+lesson);
+                        } else {
+                            grid = checkpoints[grid][1];
+                        }
+                    }
+                    checkpoints[grid_] = [lesson, grid];
                     if (!colorsMap[cellDatas[0].join('')]) colorsMap[cellDatas[0].join('')] = colors[(colorCount++) % colors.length];
                     cells.push({
                         grid,
@@ -136,7 +146,7 @@ export class Schedule extends React.Component<ScheduleProps, ScheduleState> {
                         gridArea: cell.grid,
                         backgroundColor: cell.color
                     }}
-                    className='schedule-cell'
+                    className={`schedule-cell`}
                     onClick={this.showDetail.bind(this, cell.data)}
                 >
                     <View className='name'>{cell.name}</View>

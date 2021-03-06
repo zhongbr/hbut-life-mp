@@ -160,8 +160,14 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
         courses.forEach(course => {
             course.schedules.forEach(schedule => {
                 if (schedule.weeks.indexOf(week) !== -1) {
+                    schedule.section?.sort((a,b)=>a-b);
+                    let checkpoint = [(schedule.section?schedule.section:[])[0], `cell_${Sha1Hash(`${course.name}${schedule.classroom}${week}${schedule.day}${course.teachers}`).slice(0, 5)}`];
                     schedule.section?.forEach(section => {
-                        let hash = `cell_${Sha1Hash(`${course.name}${schedule.classroom}${week}${schedule.day}${course.teachers}${Math.random()}`).slice(0, 5)}`;
+                        let hash = checkpoint[1] as string; // 将该节课上一个cell的hash赋值过来
+                        if(Math.abs(checkpoint[0] as number - section) > 1){ // 如果中间间断了，就重新取hash，避免导致grid布局不显示
+                            hash = `cell_${Sha1Hash(hash+section)}`;
+                        }
+                        checkpoint = [section, hash];
                         if (!colors[course.name]) colors[course.name] = ScheduleColors[Object.keys(events).length % ScheduleColors.length];
                         template[section][schedule.day] = hash;
                         events[hash] = {
