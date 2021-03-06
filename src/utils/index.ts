@@ -1,5 +1,6 @@
 export * as net from './net/request';
 export * as passwords from './net/password';
+export * as hash from './net/sha1';
 export * as date from './date';
 export * as gpa from './gpa';
 export * as icons from './icons';

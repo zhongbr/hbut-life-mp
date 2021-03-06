@@ -1,11 +1,13 @@
 import React from 'react'
 import Taro from '@tarojs/taro'
 import { View, Text, Picker, Button } from '@tarojs/components'
-import { AtList, AtListItem, AtButton, AtForm, AtFloatLayout } from 'taro-ui'
+import { AtList, AtListItem, AtButton, AtForm, AtFloatLayout, AtCard } from 'taro-ui'
 import { CustomNavigationBar } from '../../components/navigation/navigation-bar'
+import { Schedule as ScheduleComponent, ScheduleData } from '../../components/schedule/schedule'
 import { Buildings } from '../../utils/constants'
 import { request } from '../../utils/net/request'
 import { DateFormat } from '../../utils/date'
+import * as utils from '../../utils/index'
 import './study.scss'
 
 interface StudyPageState {
@@ -37,11 +39,12 @@ const Tips = {
 export default class StudyPage extends React.Component<any, StudyPageState> {
     constructor(props: any) {
         super(props);
+        const {week, dayString} = utils.date.GetTodayWeekday();
         this.state = {
             area: Object.keys(Buildings)[0],
-            build: Buildings[Object.keys(Buildings)[0]][0],
-            week: 1,
-            day: '星期一',
+            build: Buildings[Object.keys(Buildings)[0]][1],
+            week: week,
+            day: dayString,
             lesson: '第1-2节',
             freeClassrooms: []
         }
@@ -144,19 +147,16 @@ export default class StudyPage extends React.Component<any, StudyPageState> {
             >
                 {this.state.classroomBusyWeeks && <View className='state-info'>
                     {(
-                        (this.state.classroomBusyWeeks[this.state.lesson][this.state.day]==null?
-                        []:this.state.classroomBusyWeeks[this.state.lesson][this.state.day])?.indexOf(this.state.week) != -1)
-                         ? '教室占用' : '教室空闲'}
+                        (this.state.classroomBusyWeeks[this.state.lesson][this.state.day] == null ?
+                            [] : this.state.classroomBusyWeeks[this.state.lesson][this.state.day])?.indexOf(this.state.week) != -1)
+                        ? '当前教室占用' : '当前教室空闲'}
                 </View>}
-                <AtList>
-                    {this.state.classroomSchedule && this.state.classroomSchedule[this.state.lesson][this.state.day]?.map(
-                        (courses: string[], index: number) => <AtListItem
-                            title={courses[0]}
-                            note={`${courses[3]} ${courses[2]}`}
-                            extraText={courses[1]}
-                        />
-                    )}
-                </AtList>
+                {this.state.classroomSchedule && <ScheduleComponent
+                    schedule={this.state.classroomSchedule}
+                    lessons={['第1-2节', '第3-4节', '第5-6节', '第7-8节', '第9-10节',]}
+                    days={['星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '星期日',]}
+                    colors={utils.constants.ScheduleColors}
+                />}
             </AtFloatLayout>
         </>
     }

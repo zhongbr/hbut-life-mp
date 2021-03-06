@@ -79,7 +79,7 @@ export const LoginTips = {
 }
 
 // 学期信息
-export const SemesterStartDay = new Date('2020-09-06T16:00:00.000Z');
+export const SemesterStartDay = new Date('2021-03-01');
 export const CurrentSemester = {
     name: '2020-2021学年第一学期',
     code: '20202'

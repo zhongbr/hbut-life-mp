@@ -161,7 +161,7 @@ export default class SchedulePage extends React.Component<any, SchedulePageState
             course.schedules.forEach(schedule => {
                 if (schedule.weeks.indexOf(week) !== -1) {
                     schedule.section?.forEach(section => {
-                        let hash = `cell_${Sha1Hash(`${course.name}${schedule.classroom}${week}${schedule.day}${course.teachers}`).slice(0, 5)}`;
+                        let hash = `cell_${Sha1Hash(`${course.name}${schedule.classroom}${week}${schedule.day}${course.teachers}${Math.random()}`).slice(0, 5)}`;
                         if (!colors[course.name]) colors[course.name] = ScheduleColors[Object.keys(events).length % ScheduleColors.length];
                         template[section][schedule.day] = hash;
                         events[hash] = {

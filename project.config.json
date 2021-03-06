@@ -4,7 +4,7 @@
     "description": "hbut life",
     "appid": "wxcc86ffef8311d096",
     "setting": {
-        "urlCheck": true,
+        "urlCheck": false,
         "es6": false,
         "enhance": false,
         "postcss": false,

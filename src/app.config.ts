@@ -17,7 +17,8 @@ export default {
     'pages/elective/elective',
     'pages/elective/tables',
     'pages/elective/histories',
-    'pages/about/about'
+    'pages/about/about',
+    'pages/keyword-schedule/keyword-schedule'
   ],
   window: {
     navigationStyle: 'custom',

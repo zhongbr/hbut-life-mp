@@ -33,7 +33,8 @@ export const Icons: Icon[] = [
     NewIcon('elective', 'elective.svg', '#CF97FC', '选修', 'vert', false, '005'),
     NewIcon('book', 'book.svg', '#D0E1DF', '图书', 'lvl', false, '002'),
     NewIcon('lab', 'lab.svg', '#F78E76', '实验', 'lvl', false, '003'),
-    NewIcon('calendar', 'calendar.svg', '#EFA5CB', '校历', 'vert', false)
+    NewIcon('calendar', 'calendar.svg', '#EFA5CB', '校历', 'vert', false),
+    NewIcon('keyword-schedule', 'calculator.svg', '#2FD333', '蹭课', 'lvl', false, '005')
 ]
 
 function NewIcon(name: string, path: string, color: string, tag: string, direction: 'vert'|'lvl', square: boolean, account?: string): Icon {
