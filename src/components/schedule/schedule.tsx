@@ -75,9 +75,9 @@ export class Schedule extends React.Component<ScheduleProps, ScheduleState> {
                 if (cellDatas.length > 0) {
                     let grid_ = 'g' + hash.Sha1Hash(cellDatas[0].join('') + day).slice(0, 5);
                     let grid = grid_;
-                    if(checkpoints[grid]?.length){
-                        if(Math.abs(this.props.lessons.indexOf(checkpoints[grid][0])-this.props.lessons.indexOf(lesson))>1){
-                            grid = 'g'+hash.Sha1Hash(grid+lesson);
+                    if (checkpoints[grid]?.length) {
+                        if (Math.abs(this.props.lessons.indexOf(checkpoints[grid][0]) - this.props.lessons.indexOf(lesson)) > 1) {
+                            grid = 'g' + hash.Sha1Hash(grid + lesson);
                         } else {
                             grid = checkpoints[grid][1];
                         }
@@ -87,7 +87,7 @@ export class Schedule extends React.Component<ScheduleProps, ScheduleState> {
                     cells.push({
                         grid,
                         name: cellDatas[0][0],
-                        info: cellDatas[0][cellDatas[0].length-1],
+                        info: cellDatas[0][cellDatas[0].length - 1],
                         badage: cellDatas.length - 1,
                         data: cellDatas,
                         color: colorsMap[cellDatas[0].join('')],

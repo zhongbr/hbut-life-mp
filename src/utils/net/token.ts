@@ -37,7 +37,10 @@ export class Token {
                             platform: Platform,
                             js_code: jscode
                         },
-                        success(res: any) {
+                        success: (res: any) => {
+                            this.updateTime = new Date();
+                            this.token = res.data.token;
+                            this.fakeid = res.data.fakeid;
                             resolve({
                                 token: res.data.token,
                                 fakeid: res.data.fakeid,
@@ -50,21 +53,19 @@ export class Token {
 
     // 获取token
     public async getApiToken(): Promise<TokenResponse> {
-        return new Promise<TokenResponse>((resovle: (res: TokenResponse) => void, reject: () => void) => {
-            // 如果本地的token还在有效期，直接使用本地的token
-            if (this.updateTime === null || new Date().valueOf() - this.updateTime.valueOf() > this.expire) {
-                this.refreshToken().then(res => resovle(res), reject);
-            }
-            // 从服务器刷新token
-            else {
-                resovle({ token: this.token, fakeid: this.fakeid });
-            }
-        });
+        // 如果本地的token还在有效期，直接使用本地的token，或者从服务器获取新的token
+        if (this.updateTime === null || new Date().valueOf() - this.updateTime.valueOf() > this.expire) {
+            return this.refreshToken();
+        }
+        else {
+            return { token: this.token, fakeid: this.fakeid };
+        }
     }
 }
 
+const getter = new Token(`${Protocol}://${ServerDomain}:${Port}${AuthBase}${ApiVersion}?platform=${Platform}&version=${AppVersion}`, TokenExpire);
+
 export default async function TokenFactory(): Promise<TokenResponse> {
-    let getter = new Token(`${Protocol}://${ServerDomain}:${Port}${AuthBase}${ApiVersion}?platform=${Platform}&version=${AppVersion}`, TokenExpire);
     let token = await getter.getApiToken();
     return token as TokenResponse;
 }
