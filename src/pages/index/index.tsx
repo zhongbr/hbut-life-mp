@@ -67,6 +67,9 @@ export default class Index extends Component<any, IndexState> {
   componentWillUnmount() { }
 
   async componentDidShow() {
+    if(!Taro.getStorageSync('agreed')){
+      Taro.reLaunch({url: '../alert/alert'});
+    }
     await this.GetBanners();
     await this.GetNotification();
     await this.CheckHasLoginStudentNumber();
